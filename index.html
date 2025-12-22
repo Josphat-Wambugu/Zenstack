@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZenStack — Dashboard</title>
+  <link rel="stylesheet" href="todo.css">
+</head>
+<body>
+  <header style="text-align:center;padding:18px 12px;background:transparent">
+    <h1 style="margin:0;font-size:1.35rem">ZenStack Dashboard</h1>
+    <p style="margin:.25rem 0;color:#6b7280">Task board · Clock & Weather · Notes</p>
+  </header>
+
+  <main class="grid">
+    <!-- Left: Task Board -->
+    <section class="panel board" aria-label="Task Board">
+      <div class="panel-header">
+        <h2>Task Board</h2>
+        <div class="board-controls">
+          <input id="new-card" placeholder="New card title" aria-label="New board card" />
+          <button id="add-card">Add</button>
+        </div>
+      </div>
+      <div class="board-columns" id="board-columns">
+        <div class="column" data-column="todo">
+          <h3>To Do</h3>
+          <div class="cards" data-column="todo"></div>
+        </div>
+        <div class="column" data-column="in-progress">
+          <h3>In Progress</h3>
+          <div class="cards" data-column="in-progress"></div>
+        </div>
+        <div class="column" data-column="done">
+          <h3>Done</h3>
+          <div class="cards" data-column="done"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Clock/Weather + Notes -->
+    <aside class="panel right" aria-label="Utilities">
+      <div class="clock-weather">
+        <div class="clock" id="clock">--:--:--</div>
+        <div class="weather" id="weather">Loading weather…</div>
+      </div>
+
+      <div class="notes">
+        <div class="panel-header">
+          <h2>Notes</h2>
+          <div class="notes-controls">
+            <button id="add-note">New</button>
+            <input id="search-note" placeholder="Search notes" aria-label="Search notes" />
+          </div>
+        </div>
+        <div id="notes-list" class="notes-list"></div>
+        <div id="note-editor" class="note-editor">
+          <input id="note-title" placeholder="Title" />
+          <textarea id="note-body" placeholder="Write your note here..."></textarea>
+          <div class="note-actions">
+            <button id="save-note">Save</button>
+            <button id="delete-note">Delete</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <section style="max-width:1100px;margin:14px auto;padding:12px 16px;color:var(--muted);font-size:.95rem;border-radius:8px;text-align:left">
+    <strong>How to use:</strong>
+    <ul style="margin:8px 0 0 18px">
+      <li>Add cards in <em>Task Board</em> and drag them between columns.</li>
+
+      <li>See current time and local weather (grants location access for weather).</li>
+      <li>Create, edit, and search notes on the right. Everything persists locally.</li>
+    </ul>
+  </section>
+
+  <footer style="text-align:center;padding:14px;color:#6b7280;font-size:.9rem">ZenStack • Minimal dashboard example</footer>
+
+  <script src="index.js"></script>
+</body>
+</html>

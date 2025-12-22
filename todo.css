@@ -1,0 +1,41 @@
+/* Dashboard styles for Task Board, To-Do, Clock/Weather, Notes */
+:root{--bg:#f7f8fb;--card:#fff;--accent:#2b6cb0;--muted:#6b7280;--glass:rgba(255,255,255,0.6)}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,var(--bg),#eef2ff 60%);color:#111827}
+header{max-width:1100px;margin:18px auto}
+main.grid{max-width:1100px;margin:18px auto;display:grid;grid-template-columns:1fr 1fr 340px;gap:16px;padding:0 12px}
+.panel{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 6px 20px rgba(16,24,40,0.06)}
+.panel-header{display:flex;align-items:center;gap:8px}
+.panel-header h2{margin:0;font-size:1rem}
+
+/* Board */
+.board .board-controls{display:flex;gap:8px;margin-left:auto}
+.board-columns{display:flex;gap:12px;margin-top:12px}
+.column{flex:1;min-height:120px;display:flex;flex-direction:column}
+.column h3{margin:0 0 8px 0;font-size:.95rem}
+.cards{background:linear-gradient(180deg,#fbfdff,#fff);padding:8px;border-radius:8px;min-height:120px;border:1px solid #f1f5f9}
+.cards.over{outline:3px dashed rgba(43,108,176,0.12)}
+.card{background:#fff;padding:8px;border-radius:8px;margin-bottom:8px;box-shadow:0 1px 0 rgba(2,6,23,0.03);cursor:grab;border:1px solid #eef2f6;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card.dragging{opacity:0.5}
+.card .title{flex:1}
+.card button{background:transparent;border:none;cursor:pointer;color:var(--muted)}
+
+
+
+/* Right panel: clock/weather & notes */
+.clock-weather{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.clock{font-size:1.4rem;font-weight:600}
+.weather{font-size:.95rem;color:var(--muted)}
+
+.notes .notes-controls{display:flex;gap:8px;margin-left:auto}
+.notes-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow:auto;margin-top:8px}
+.note-card{padding:8px;border-radius:8px;background:#fff;border:1px solid #f1f3f6;cursor:pointer}
+.note-editor{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.note-editor input,.note-editor textarea{width:100%;padding:8px;border:1px solid #e6e9ef;border-radius:8px}
+.note-actions{display:flex;gap:8px;justify-content:flex-end}
+.note-actions button{padding:8px 10px;border-radius:8px;border:none}
+
+footer{max-width:1100px;margin:12px auto;text-align:center;color:var(--muted)}
+
+@media (max-width:980px){main.grid{grid-template-columns:1fr 1fr}}@media (max-width:720px){main.grid{grid-template-columns:1fr;gap:12px;padding:0 10px}}
