@@ -3,81 +3,137 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZenStack — Dashboard</title>
+  <title>ZenStack</title>
   <link rel="stylesheet" href="todo.css">
 </head>
 <body>
-  <header style="text-align:center;padding:18px 12px;background:transparent">
-    <h1 style="margin:0;font-size:1.35rem">ZenStack Dashboard</h1>
-    <p style="margin:.25rem 0;color:#6b7280">Task board · Clock & Weather · Notes</p>
-  </header>
+  <div class="app-grid" id="app">
 
-  <main class="grid">
-    <!-- Left: Task Board -->
-    <section class="panel board" aria-label="Task Board">
-      <div class="panel-header">
-        <h2>Task Board</h2>
-        <div class="board-controls">
-          <input id="new-card" placeholder="New card title" aria-label="New board card" />
-          <button id="add-card">Add</button>
-        </div>
+    <header class="topbar" role="banner">
+      <div class="brand">
+        <h1>ZenStack</h1>
+        
       </div>
-      <div class="board-columns" id="board-columns">
-        <div class="column" data-column="todo">
-          <h3>To Do</h3>
-          <div class="cards" data-column="todo"></div>
-        </div>
-        <div class="column" data-column="in-progress">
-          <h3>In Progress</h3>
-          <div class="cards" data-column="in-progress"></div>
-        </div>
-        <div class="column" data-column="done">
-          <h3>Done</h3>
-          <div class="cards" data-column="done"></div>
-        </div>
+      <div class="controls">
+        <button id="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌙</button>
       </div>
-    </section>
+    </header>
 
-    <!-- Right: Clock/Weather + Notes -->
-    <aside class="panel right" aria-label="Utilities">
-      <div class="clock-weather">
-        <div class="clock" id="clock">--:--:--</div>
-        <div class="weather" id="weather">Loading weather…</div>
-      </div>
+    <aside class="sidebar" role="complementary" aria-label="Primary navigation">
+      <nav>
+        <ul>
+          <li><a href="#" class="active">Dashboard</a></li>
+          <li><a href="#board">Tasks</a></li>
+          <li><a href="#notes">Notes</a></li>
+          <li><a href="#settings">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-      <div class="notes">
-        <div class="panel-header">
-          <h2>Notes</h2>
+    <main class="main" role="main">
+<!-- Clock & Weather -->
+      <section id="clock-weather" class="panel clock" aria-labelledby="clock-heading">
+        <header class="panel-header"><h2 id="clock-heading">Clock & Weather</h2></header>
+        <div class="clock-weather">
+          <div class="clock" id="clock">--:--:--</div>
+          <div class="weather" id="weather">Loading…</div>
+        </div>
+      </section>
+
+      <!-- Task Board -->
+      <section id="board" class="panel board" aria-labelledby="board-heading">
+        <header class="panel-header">
+          <h2 id="board-heading">Task Board</h2>
+          <form id="task-form" class="task-form" aria-label="Add task">
+            <label for="task-title">Title</label>
+            <input id="task-title" name="title" type="text" placeholder="New task title" required />
+            <label for="task-column">Column</label>
+            <select id="task-column" name="column">
+              <option value="todo">To Do</option>
+              <option value="in-progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+            <button type="submit">Add</button>
+          </form>
+        </header>
+
+        <div class="board-grid" id="board-grid">
+          <div class="column" data-column="todo">
+            <h3>To Do</h3>
+            <div class="cards" data-column="todo" aria-live="polite"></div>
+          </div>
+          <div class="column" data-column="in-progress">
+            <h3>In Progress</h3>
+            <div class="cards" data-column="in-progress" aria-live="polite"></div>
+          </div>
+          <div class="column" data-column="done">
+            <h3>Done</h3>
+            <div class="cards" data-column="done" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+     
+
+      <!-- Notes -->
+      <section id="notes" class="panel notes" aria-labelledby="notes-heading">
+        <header class="panel-header">
+          <h2 id="notes-heading">Notes</h2>
           <div class="notes-controls">
-            <button id="add-note">New</button>
+            <button id="add-note" aria-label="New note">New</button>
+            <label for="search-note" class="sr-only">Search notes</label>
             <input id="search-note" placeholder="Search notes" aria-label="Search notes" />
           </div>
-        </div>
-        <div id="notes-list" class="notes-list"></div>
-        <div id="note-editor" class="note-editor">
-          <input id="note-title" placeholder="Title" />
-          <textarea id="note-body" placeholder="Write your note here..."></textarea>
-          <div class="note-actions">
-            <button id="save-note">Save</button>
-            <button id="delete-note">Delete</button>
+        </header>
+        <div class="notes-area">
+          <ul id="notes-list" class="notes-list" role="list"></ul>
+          <div class="note-editor" id="note-editor">
+            <label for="note-title">Title</label>
+            <input id="note-title" />
+            <label for="note-body">Body</label>
+            <textarea id="note-body" rows="6"></textarea>
+            <div class="note-actions">
+              <button id="save-note">Save</button>
+              <button id="delete-note">Delete</button>
+            </div>
           </div>
         </div>
+      </section>
+
+      <section id="info" class="panel info" aria-label="About">
+        <h2>About</h2>
+        <p>ZenStack is a minimal, single-file style productivity suite demo (Task Board, Clock/Weather, Notes). All data is stored locally in <code>localStorage</code>.</p>
+      </section>
+
+    </main>
+
+    <footer class="site-footer" role="contentinfo">ZenStack • Minimal dashboard example</footer>
+
+  </div>
+
+  <!-- Templates -->
+  <template id="task-template">
+    <article class="card" draggable="true">
+      <div class="card-body">
+        <div class="title" data-role="title"></div>
+        <div class="meta">
+          <time data-role="time"></time>
+        </div>
       </div>
-    </aside>
-  </main>
+      <div class="card-actions">
+        <button class="edit" title="Edit">✏️</button>
+        <button class="delete" title="Delete">🗑️</button>
+      </div>
+    </article>
+  </template>
 
-  <section style="max-width:1100px;margin:14px auto;padding:12px 16px;color:var(--muted);font-size:.95rem;border-radius:8px;text-align:left">
-    <strong>How to use:</strong>
-    <ul style="margin:8px 0 0 18px">
-      <li>Add cards in <em>Task Board</em> and drag them between columns.</li>
+  <template id="note-template">
+    <li class="note-card">
+      <strong data-role="title"></strong>
+      <div class="note-meta" data-role="meta"></div>
+    </li>
+  </template>
 
-      <li>See current time and local weather (grants location access for weather).</li>
-      <li>Create, edit, and search notes on the right. Everything persists locally.</li>
-    </ul>
-  </section>
-
-  <footer style="text-align:center;padding:14px;color:#6b7280;font-size:.9rem">ZenStack • Minimal dashboard example</footer>
-
-  <script src="index.js"></script>
+  <script src="index.js" defer></script>
 </body>
 </html>
