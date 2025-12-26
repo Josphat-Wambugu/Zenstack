@@ -41,12 +41,35 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
 .panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .panel-header h2{margin:0;font-size:1rem}
 
+/* Category bar */
+.category-bar{display:flex;gap:8px;align-items:center;margin:8px 0}
+.category-btn{padding:6px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:transparent;cursor:pointer;color:var(--text)}
+.category-btn[aria-pressed="true"],.category-btn.active{background:var(--accent);color:#fff;border-color:transparent}
+@media (max-width:980px){
+  .category-bar{overflow:auto;padding-bottom:6px}
+}
+
+/* Categories panel styling */
+.panel.categories{display:flex;flex-direction:column;gap:8px;padding:12px}
+
+/* Category badge on cards */
+.cat-badge{font-size:.7rem;padding:4px 6px;border-radius:6px;background:rgba(0,0,0,0.04);color:var(--muted);display:inline-block;margin-top:6px}
+
+/* Adjust board layout when 3 columns */
+.board-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;text:var(--bg)}
+
+
 /* Board grid */
 .board .task-form{display:flex;gap:8px;align-items:center}
-.board-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;text:var(--bg)}
 .column{background:rgb(102, 102, 218);border-radius:8px;padding:6px}
 .column h3{margin:0 0 8px 0;font-size:.95rem}
 .cards{min-height:200px;padding:10px;border-radius:8px;background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.02));border:1px dashed rgba(0,0,0,0.04)}
+
+/* Completed task */
+.card.completed{opacity:0.7}
+.card.completed .title{text-decoration:line-through;color:var(--muted)}
+.done-label{display:flex;align-items:center;margin-right:8px}
+.done-toggle{width:18px;height:18px}
 .cards.over{outline:3px dashed rgba(37,99,235,0.14)}
 
 /* Card (Flexbox for internals) */
@@ -63,6 +86,17 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
 .clock-weather{display:flex;flex-direction:column;gap:10px}
 .clock{font-size:1.4rem;font-weight:700 ;text-align:center}
 .weather{color:var(--muted);text-align:center;font-size:.9rem}
+
+/* Statistics bar */
+.stats-bar{display:flex;gap:12px;align-items:center;margin-top:12px}
+.stats-item{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.04);min-width:86px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.stats-item .label{font-size:.75rem;color:var(--muted)}
+.stats-item .value{font-weight:700;font-size:1.05rem}
+.stats-item.progress{flex:1;min-width:160px}
+.progress-bar{width:100%;height:8px;background:rgba(0,0,0,0.06);border-radius:8px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#7dd3fc);width:0%;transition:width .3s ease;border-radius:8px}
+.stats-item.trend svg{display:block;width:120px;height:36px}
+.stats-item.trend polyline{stroke-linecap:round;stroke-linejoin:round;fill:none}
 
 .notes-list{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;margin-top:8px;padding:0}
 .note-card{list-style:none;padding:8px;border-radius:8px;background:var(--card);border:1px solid var(--card-border);cursor:pointer}
@@ -87,4 +121,3 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
 }
 
 
-/* Dashboard styles for Task Board, To-Do, Clock/Weather, Notes */
