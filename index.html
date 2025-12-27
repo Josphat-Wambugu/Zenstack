@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>ZenStack</title>
-  <link rel="stylesheet" href="todo.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <div class="app-grid" id="app">
@@ -25,9 +25,13 @@
           <li><a href="#" class="active">Dashboard</a></li>
           <li><a href="#board">Tasks</a></li>
           <li><a href="#notes">Notes</a></li>
-          <li><a href="#settings">Settings</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#stats-panel">Statistics</a></li>
+          <li><a href="#About">Settings</a></li>
         </ul>
       </nav>
+
+
     </aside>
 
     <main class="main" role="main">
@@ -40,50 +44,7 @@
         </div>
       </section>
 
-      <!-- Statistics Bar -->
-      <section id="stats" class="panel stats" aria-labelledby="stats-heading">
-        <header class="panel-header"><h2 id="stats-heading">Statistics</h2></header>
-        <div class="stats-bar" id="stats-bar" aria-live="polite">
-          <div class="stats-item total">
-            <div class="label">Total</div>
-            <div class="value" id="stat-total">0</div>
-          </div>
-          <div class="stats-item done">
-            <div class="label">Completed</div>
-            <div class="value" id="stat-done">0</div>
-          </div>
-          <div class="stats-item progress">
-            <div class="label">Progress</div>
-            <div class="value" id="stat-progress">0%</div>
-            <div class="progress-bar" aria-hidden="true">
-              <div class="progress-fill" id="stat-progress-fill" style="width:0%"></div>
-            </div>
-          </div>
-          <div class="stats-item trend">
-            <div class="label">Trend</div>
-            <svg id="stat-sparkline" width="120" height="36" viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true"></svg>
-          </div>
-        </div>
-      </section>
-
-      <!-- Task Board -->
-      <section id="board" class="panel board" aria-labelledby="board-heading">
-        <header class="panel-header">
-          <h2 id="board-heading">Task Board</h2>
-          <form id="task-form" class="task-form" aria-label="Add task">
-            <label for="task-title">Title</label>
-            <input id="task-title" name="title" type="text" placeholder="New task title" required />
-            <label for="task-column">Category</label>
-            <select id="task-column" name="column">
-              <option value="work">Work</option>
-              <option value="personal">Personal</option>
-              <option value="art-and-creativity">Art & Creativity</option>
-              <option value="health-and-sports">Health & Sports</option>
-            </select>
-            <button type="submit">Add</button>
-          </form>
-        </header>
-
+      
         <!-- Categories panel (separate) -->
         <section id="categories" class="panel categories" aria-labelledby="categories-heading">
           <header class="panel-header"><h3 id="categories-heading">Categories</h3></header>
@@ -94,7 +55,29 @@
             <button class="category-btn" data-col="art-and-creativity">Art & Creativity</button>
             <button class="category-btn" data-col="health-and-sports">Health & Sports</button>
           </div>
+
+          <div id="category-list" class="category-list" aria-live="polite" hidden></div>
         </section>
+
+
+      <!-- Task Board -->
+      <section id="board" class="panel board" aria-labelledby="board-heading">
+        <header class="panel-header">
+          <h2 id="board-heading">Task Board</h2>
+          <form id="task-form" class="task-form" aria-label="Add task">
+            <label for="task-title">Title</label>
+            <input id="task-title" class="task-title" name="title" type="text" placeholder="New task title" required />
+            <label for="task-column">Category</label>
+            <select id="task-column"class="task-column" name="column">
+              <option value="work">Work</option>
+              <option value="personal">Personal</option>
+              <option value="art-and-creativity">Art & Creativity</option>
+              <option value="health-and-sports">Health & Sports</option>
+            </select>
+            <button type="button" id="task-priority-btn" class="task-priority" data-priority="Medium" aria-pressed="false" title="Toggle priority">Priority: Medium</button>
+            <button type="submit" class="task-btn">Add</button>
+          </form>
+        </header>
 
         <div class="board-grid" id="board-grid">
           <div class="column" data-column="todo">
@@ -119,27 +102,52 @@
         <header class="panel-header">
           <h2 id="notes-heading">Notes</h2>
           <div class="notes-controls">
-            <button id="add-note" aria-label="New note">New</button>
+            <button id="add-note" aria-label="New note" class="add-note">New</button>
             <label for="search-note" class="sr-only">Search notes</label>
-            <input id="search-note" placeholder="Search notes" aria-label="Search notes" />
+            <input id="search-note" class="search-note" placeholder="Search notes" aria-label="Search notes" />
           </div>
         </header>
-        <div class="notes-area">
+          <div class="notes-area">
           <ul id="notes-list" class="notes-list" role="list"></ul>
-          <div class="note-editor" id="note-editor">
-            <label for="note-title">Title</label>
-            <input id="note-title" />
-            <label for="note-body">Body</label>
-            <textarea id="note-body" rows="6"></textarea>
-            <div class="note-actions">
-              <button id="save-note">Save</button>
-              <button id="delete-note">Delete</button>
-            </div>
           </div>
         </div>
       </section>
 
-      <section id="info" class="panel info" aria-label="About">
+      <!-- Statistics Panel -->
+      <section id="stats-panel" class="panel-stats" aria-labelledby="stats-heading">
+        <header class="panel-header"><h2 id="stats-heading">Statistics</h2></header>
+        <div class="stats-grid" id="stats-grid">
+          <div class="stats-summary">
+            <div class="stats-item">
+              <div class="label">Total Tasks</div>
+              <div class="value" id="stat-total">0</div>
+            </div>
+            <div class="stats-item1">
+              <div class="label">To Do</div>
+              <div class="value" id="stat-todo-count">0</div>
+            </div>
+            <div class="stats-item2">
+              <div class="label">In Progress</div>
+              <div class="value" id="stat-inprogress-count">0</div>
+            </div>
+            <div class="stats-item3">
+              <div class="label">Done</div>
+              <div class="value" id="stat-done">0</div>
+            </div>
+          </div>
+          <div class="stats-progress">
+            <div class="label">Progress</div>
+            <div class="progress-bar" aria-hidden="true">
+              <div class="progress-fill" id="stat-progress-fill" style="width:0%"></div>
+            </div>
+            <div class="value right" id="stat-progress">0%</div>
+            <div class="label" style="margin-top:8px">Trend (completed over time)</div>
+            <svg id="stat-sparkline" width="180" height="48" viewBox="0 0 180 48" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+        </div>
+      </section>
+
+      <section id="info" class="panel-info" aria-label="About">
         <h2>About</h2>
         <p>ZenStack is a minimal, single-file style productivity suite demo (Task Board, Clock/Weather, Notes). All data is stored locally in <code>localStorage</code>.</p>
       </section>
@@ -161,6 +169,7 @@
         <div class="meta">
           <time data-role="time"></time>
         </div>
+        <div class="priority-badge" data-role="priority" title="Click to change priority">Medium</div>
         <div class="cat-badge" data-role="category"></div>
       </div>
       <div class="card-actions">
